@@ -335,6 +335,20 @@ At first, simulation mode is the most important, but we should be able to
 at least "star" certain agents so we can more easily follow them over time
 in the UI.
 
+Although presentation is not a major focus, I have found that it has a
+meaningful impact on even prototype projects. I want at least:
+
+*   Reasonably appealing and lightly thematic fonts, layouts, and color
+    schemes
+*   Use icons to expression information more compactly when applicable
+*   Lots of tooltips and drilldowns to source the computations that go
+    into different values
+*   Some use of imagery to bring things to life and dramatize certain
+    changes:
+    *   Show some sort of settlement images, use them to help show
+        settlement size and type
+    *   Some sort of images of people/clans
+
 # Other points
 
 Other points to incorporate that I've come up with over time but don't
