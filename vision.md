@@ -59,6 +59,8 @@ want to explore with the model:
 The initial focus is on simplicity of deployment and testing. The tentative
 architecture is a simple TypeScript-based web app that can be loaded up and
 run locally.
+*   Simulation should be a completely headless component, fully runnable
+    without any UI or ancillary application stuff
 *   Dependencies should be relatively light
 *   Everything should be workable for open-source usage, distributed
     development, no platform lock-in
@@ -107,6 +109,8 @@ off of new villages, but we'll want to portray that process in some detail
 if possible, and we'll need some model for the relationships among the
 new villages. We will also want to have some social and infrastructural
 options that are useful in settlements starting to expand toward "towns".
+
+## Agents and their motivations
 
 For now, agents will always be clans, but we'll also want to have the
 possibility of having leader personalities that affect clan behavior,
@@ -190,6 +194,8 @@ increasingly motivational as need builds up. Clans will want/need:
     *   May be motivating all by themselves, but can be very culturally
         shaped, e.g, becoming status markers
 
+## Conflict: Deferred
+
 Conflict as in warfare and the like won't be a significant focus of
 the simulation at first. One reason is that archaeologically, there
 seems to have been less conflict in our early setting than in many
@@ -202,15 +208,29 @@ development, administrative development, and solidarity generally:
 once our simulation reaches a period where those effects become
 significant, we'll have to include them.
 
+## Identity: Overlapping and Mutable
+
 Identity will be a major theme. Clans should have notions about who
 they belong to: allies, nested kinship networks, local place identities,
 etc. Eventually larger scale identities will appear to compete with
 these, but in the early stage marriage and kinship (real or imputed)
 are probably the main components of this.
 
-Ideally, the simulation will be somewhat flexible about how long a time
-step is, but at first one step will probably be between 1 and 20 years
-of simulation-world time. The sequence for a step will be something like:
+## Time and Simulation Steps
+
+The system should be designed to support simulation ticks of a
+season or year, with some flexibility. Year-based is OK to start.
+
+There should be options in the UI to move forward by 1 tick, or
+also by multiple ticks at a time (e.g., 10 or 20).
+
+The simulation engine should also support the notion of nested ticks,
+so that we might have a "big tick" of 20 years to represent a generation,
+while internally the system goes through the basic loop 20 times.
+It should also be possible at some point to plug in a "big tick"
+that does 20 years all at once.
+
+The sequence for a tick will be something like:
 
 *   Evaluate: Agents evaluate their current state and knowledge
     *   Update happiness-type assessments based on current state and
@@ -227,6 +247,33 @@ of simulation-world time. The sequence for a step will be something like:
     *   Consume: Register effects of goods and rituals on recipients
     *   Population change: Update population for births and deaths
 *   Record: Record part of state for history tracking and graphing
+
+## Mapping and Spatial Representations
+
+Representations will be somewhat point-based, somewhat tile-based.
+
+*   The map will represent southern Mesopotamia and the regions just
+    outside its edges for 20 miles or so.
+*   Everything with a specific point location within the region 
+    (e.g., a village) will have an (x,y) coordinate location, with
+    x and y specified in miles.
+*   The Tigris and Euphrates rivers will be drawn on the map with
+    their "actual" (allowing for lack of data and change over time)
+    courses displayed: they won't be restricted to tiles or tile
+    boundaries
+*   The region will be divided into approximately 10x10 square
+    tiles. Tiles are used mainly to track terrain type, quantity
+    of arable land, etc., and aren't necessarily drawn on the map
+    *   Ideally, the map would show the terrain types with a 
+        realistic-looking boundary
+    *   Showing some background color or image per tile would be
+        OK
+*   There can be multiple settlements in a tile, and a settlement
+    cluster could in theory cross tile boundaries: tiles are an
+    abstraction to cover certain geographic factors but shouldn't
+    matter too much for human purposes.
+
+## Agent Interactions
 
 A critical aspect of the early model is giving clans ways to help or
 hurt each other, so they can develop different kinds of relationships.
@@ -328,6 +375,59 @@ relationship between one clan and another:
     can be a distinction between clan A simply looking to clan B because,
     all things considered that's what they want to do, and later on
     certain roles being more explicitly reserved for specialists.
+
+
+### General Points On Agent Interaction and Exchange
+
+I don't have everything worked out on this, but here are some general
+things to consider and try to represent in the model.
+
+*Structures of Social Life* by Alan Fiske (1993) provides a taxonomy of
+ways social production and human relations are organized. The simulation
+should model what is known about how people related in the setting in
+terms of these structures, with appropriate consequences. Briefly, the
+four elementary structures are:
+
+*   Communal Sharing (CS): Everyone in the community gets a full share;
+    who is a member is a very important question. This might apply if
+    certain villages or other supra-clan units had a common store or
+    held land in common, or at major festivals run communally.
+*   Authority Ranking (AR): Ranking, ordering, and asymmetrical 
+    relationships. Could apply to secret societies, status markers,
+    special ritual roles and authority.
+*   Equality Matching (EM): Turn-taking, exchanging items one for one,
+    reciprocity. Could apply to basic trade relationships, labor matching
+    or exchange relationships, tit for tat logic, rituals with equal-turns
+    structure.
+*   Market Pricing (MP): Exchange with unequal ratios, floating prices,
+    supply and demand. Could apply to more complex trade relationships,
+    more complex social or ritual credit systems.
+
+For example, to model what happens if a clan suffers a disaster
+and needs to be bailed out to survive, the simulation needs to know
+which of those structures is in effect:
+
+*   Perhaps it's a close-knit village that handles disasters with
+    Communal Sharing: others help out, with no shifts in status, but
+    a bit more attention on the helpees and more trust in the
+    Communal Sharing structure.
+*   Maybe it's a city where by Authority Ranking the "Mayor" is
+    responsible for helping. Costs the city resources, might or
+    might cost status to recipients.
+*   Or the situation might establish Authority Ranking where disaster
+    victims accept subordinate status to another clan.
+*   Mutual aid relationships can be a form of Equality Matching. They
+    could take the form of each agreeing to help each other, or maybe
+    each contributes equal amounts to a common store all may draw on
+    in time of need. Another form is for the recipients to owe a "big
+    favor" to the givers
+*   If everyone pays a tithe and then will be helped out if they need,
+    that can be considered Market Pricing. The tithe amount might float,
+    or it might not, but in either case, it's an asymmetric quantity-
+    based exchange.
+
+Similar considerations apply to ritual organization and economic
+specialization.
 
 # Initial User Interface
 
