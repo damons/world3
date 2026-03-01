@@ -60,7 +60,13 @@ The initial focus is on simplicity of deployment and testing. The tentative
 architecture is a simple TypeScript-based web app that can be loaded up and
 run locally.
 *   Dependencies should be relatively light
+*   Everything should be workable for open-source usage, distributed
+    development, no platform lock-in
 *   UI should be responsive: no slow/heavyweight frameworks
+*   Should be usable on mobile. Phones are pretty small so it doesn't have
+    to be great, but should be possible to demo. Should be well usable
+    on tablets, including having appropriate standard gesture-oriented
+    interactions instead of being always mouse-oriented.
 
 It would be useful to have these at some point:
 *   Saving and restoring simulation state
